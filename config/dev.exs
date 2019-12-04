@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :discuss2, Discuss2.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "damdaica",
   database: "discuss2_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
