@@ -4,9 +4,10 @@ defmodule Discuss2.Discussions do
   """
 
   import Ecto.Query, warn: false
+  import Ecto
+  
   alias Discuss2.Repo
-
-  alias Discuss2.Discussions.Topic
+  alias Discuss2.Discussions.{Topic, Comment}
 
   @doc """
   Returns the list of topics.
@@ -108,7 +109,6 @@ defmodule Discuss2.Discussions do
     Topic.changeset(topic, %{})
   end
 
-  alias Discuss2.Discussions.Comment
 
   @doc """
   Returns the list of comments.
@@ -151,9 +151,11 @@ defmodule Discuss2.Discussions do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_comment(attrs \\ %{}) do
-    %Comment{}
+  def create_comment(attrs \\ %{}, topic) do
+    topic
+    |> build_assoc(:comments)
     |> Comment.changeset(attrs)
+    # |> Ecto.Changeset.cast_assoc(:topic, with: &Topic.changeset/2)
     |> Repo.insert()
   end
 
@@ -172,6 +174,7 @@ defmodule Discuss2.Discussions do
   def update_comment(%Comment{} = comment, attrs) do
     comment
     |> Comment.changeset(attrs)
+    # |> Ecto.Changeset.cast_assoc(:topic, with: &Topic.changeset/2)
     |> Repo.update()
   end
 

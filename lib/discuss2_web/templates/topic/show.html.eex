@@ -15,3 +15,8 @@
 </script>
 <span><%= link "Edit", to: Routes.topic_path(@conn, :edit, @topic) %></span>
 <span><%= link "Back", to: Routes.topic_path(@conn, :index) %></span>
+
+<div class="input-field">
+  <textarea class="materialize-textarea"></textarea>
+  <button class="btn">Add Comment</button>
+</div>
