@@ -37,6 +37,13 @@ defmodule Discuss2.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_by_mail(attrs \\ %{}) do
+    changeset =
+      %User{}
+      |> User.changeset(attrs)
+    Repo.get_by(User, email: changeset.changes.email)
+  end
+
   @doc """
   Creates a user.
 
