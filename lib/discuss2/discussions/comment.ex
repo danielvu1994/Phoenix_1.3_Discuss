@@ -4,6 +4,8 @@ defmodule Discuss2.Discussions.Comment do
 
   alias Discuss2.Discussions.Topic
 
+  @derive {Jason.Encoder, only: [:content]}
+
   schema "comments" do
     field :content, :string
     belongs_to :topic, Topic
