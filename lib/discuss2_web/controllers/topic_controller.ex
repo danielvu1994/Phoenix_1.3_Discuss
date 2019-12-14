@@ -4,6 +4,9 @@ defmodule Discuss2Web.TopicController do
   alias Discuss2.Discussions
   alias Discuss2.Discussions.Topic
 
+  # place plug so you must ahthen to use this methods
+  plug Discuss2.Plugs.RequireAuth when action in [:new, :create, :edit, :delete, :update]
+
   def index(conn, _params) do
     topics = Discussions.list_topics()
     render(conn, "index.html", topics: topics)
