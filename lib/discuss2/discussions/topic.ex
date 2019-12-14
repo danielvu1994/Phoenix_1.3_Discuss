@@ -3,10 +3,12 @@ defmodule Discuss2.Discussions.Topic do
   import Ecto.Changeset
 
   alias Discuss2.Discussions.Comment
+  alias Discuss2.Discussions.User
 
   schema "topics" do
     field :title, :string
     has_many :comments, Comment
+    belongs_to :user, User
 
     timestamps()
   end

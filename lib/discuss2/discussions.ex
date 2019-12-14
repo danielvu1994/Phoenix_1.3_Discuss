@@ -5,7 +5,7 @@ defmodule Discuss2.Discussions do
 
   import Ecto.Query, warn: false
   import Ecto
-  
+
   alias Discuss2.Repo
   alias Discuss2.Discussions.{Topic, Comment}
 
@@ -62,6 +62,14 @@ defmodule Discuss2.Discussions do
     |> Repo.insert()
   end
 
+  def create_topic_through_conn(conn, %{"topic" => topic}) do
+    changeset =
+      conn.assigns.user
+      # |> IO.inspect 
+      |> build_assoc(:topics)
+      |> Topic.changeset(topic)
+    Repo.insert(changeset)
+  end
   @doc """
   Updates a topic.
 

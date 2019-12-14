@@ -6,6 +6,7 @@ defmodule Discuss2Web.TopicController do
 
   # place plug so you must ahthen to use this methods
   plug Discuss2.Plugs.RequireAuth when action in [:new, :create, :edit, :delete, :update]
+  plug :check_topic_owner when action in [:update, :edit, :delete]
 
   def index(conn, _params) do
     topics = Discussions.list_topics()
@@ -18,7 +19,7 @@ defmodule Discuss2Web.TopicController do
   end
 
   def create(conn, %{"topic" => topic_params}) do
-    case Discussions.create_topic(topic_params) do
+    case Discussions.create_topic_through_conn(conn, %{"topic" => topic_params}) do
       {:ok, topic} ->
         conn
         |> put_flash(:info, "Topic created successfully.")
@@ -61,5 +62,18 @@ defmodule Discuss2Web.TopicController do
     conn
     |> put_flash(:info, "Topic deleted successfully.")
     |> redirect(to: Routes.topic_path(conn, :index))
+  end
+
+  def check_topic_owner(conn, _params) do
+    %{params: %{"id" => topic_id}} = conn
+
+    if conn.assigns.user.id == Discussions.get_topic!(topic_id).user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You cannot edit that")
+      |> redirect(to: Routes.topic_path(conn, :index))
+      |> halt()
+    end
   end
 end
