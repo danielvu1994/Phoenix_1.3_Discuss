@@ -7,6 +7,11 @@
     <title>Discuss2 · Phoenix Framework</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script>
+      <%= if @conn.assigns.user do %>
+        window.userToken = "<%= Phoenix.Token.sign(Discuss2Web.Endpoint, "key", @conn.assigns.user.id) %>"
+      <% end %>
+    </script>
   </head>
   <body>
     <header>
