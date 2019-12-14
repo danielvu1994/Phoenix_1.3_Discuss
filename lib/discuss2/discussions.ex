@@ -8,6 +8,7 @@ defmodule Discuss2.Discussions do
 
   alias Discuss2.Repo
   alias Discuss2.Discussions.{Topic, Comment}
+  alias Discuss2.Accounts.User
 
   @doc """
   Returns the list of topics.

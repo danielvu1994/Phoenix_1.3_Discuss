@@ -9,7 +9,6 @@ defmodule Discuss2.CommentsChannel do
   def join("comments:" <> topic_id, _params, socket) do
     topic_id = String.to_integer(topic_id)
     topic = Discussions.get_topic!(topic_id)
-    IO.inspect(topic)
 
     {:ok, %{comments: topic.comments}, assign(socket, :topic, topic)}
   end
