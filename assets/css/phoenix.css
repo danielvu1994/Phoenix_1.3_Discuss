@@ -117,7 +117,7 @@ header nav ul {
   margin-top: 0;
 }
 header nav a {
-  display: block;
+  display: contents;
 }
 
 @media (min-width: 40.0rem) { /* Small devices (landscape phones, 576px and up) */
@@ -125,7 +125,7 @@ header nav a {
     flex-direction: row;
   }
   header nav ul {
-    margin: 1rem;
+    margin: 0rem;
   }
   .phx-logo {
     flex-basis: 527px;
