@@ -16,6 +16,7 @@ defmodule Discuss2.CommentsChannel do
 
   def handle_in(name, %{"content" => content}, socket) do
     topic = socket.assigns.topic
+    user_id = socket.assigns.user_id
 
     # changeset =
     #   topic
@@ -25,7 +26,7 @@ defmodule Discuss2.CommentsChannel do
     #   |> Comment.changeset(%{content: content})
 
     # IO.inspect(changeset)
-    case Discussions.create_comment(%{"content" => content}, topic) do
+    case Discussions.create_comment(%{"content" => content}, topic, user_id) do
       {:ok, comment} ->
         # Notify all user about a comment is added
           broadcast!(socket, "comments:#{socket.assigns.topic.id}:new",

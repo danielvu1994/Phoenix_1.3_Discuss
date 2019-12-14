@@ -41,7 +41,7 @@ defmodule Discuss2.Discussions do
   def get_topic!(id) do
       Topic
       |> Repo.get!(id)
-      |> Repo.preload(:comments)
+      |> Repo.preload(comments: [:user])
   end
 
   @doc """
@@ -65,7 +65,7 @@ defmodule Discuss2.Discussions do
   def create_topic_through_conn(conn, %{"topic" => topic}) do
     changeset =
       conn.assigns.user
-      # |> IO.inspect 
+      # |> IO.inspect
       |> build_assoc(:topics)
       |> Topic.changeset(topic)
     Repo.insert(changeset)
@@ -159,9 +159,9 @@ defmodule Discuss2.Discussions do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_comment(attrs \\ %{}, topic) do
+  def create_comment(attrs \\ %{}, topic, user_id) do
     topic
-    |> build_assoc(:comments)
+    |> build_assoc(:comments, user_id: user_id)
     |> Comment.changeset(attrs)
     # |> Ecto.Changeset.cast_assoc(:topic, with: &Topic.changeset/2)
     |> Repo.insert()

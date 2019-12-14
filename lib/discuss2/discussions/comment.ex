@@ -3,12 +3,14 @@ defmodule Discuss2.Discussions.Comment do
   import Ecto.Changeset
 
   alias Discuss2.Discussions.Topic
+  alias Discuss2.Discussions.User
 
   @derive {Jason.Encoder, only: [:content]}
 
   schema "comments" do
     field :content, :string
     belongs_to :topic, Topic
+    belongs_to :user, User
 
     timestamps()
   end
