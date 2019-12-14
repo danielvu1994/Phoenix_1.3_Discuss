@@ -26,6 +26,13 @@ defmodule Discuss2Web.AuthController do
     end
   end
 
+  def signout(conn, _params) do
+    conn
+    # Drop all infor from session
+    |> configure_session(drop: true)
+    |> redirect(to: Routes.topic_path(conn, :index))
+  end
+
   defp insert_or_update_user(user_params) do
     case Accounts.get_user_by_mail(user_params) do
       nil ->
